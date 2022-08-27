@@ -1,0 +1,240 @@
+swagger: '2.0'
+info:
+  description: CRUD de Produtos
+  version: 1.0.0
+  title: Documentação da Api
+  contact:
+    name: Ellen Cristina Pelissari Conrado
+    email: ellenc.conrado@gmail.com
+host: localhost:9999
+basePath: /
+tags:
+  - name: product-controller
+    description: Product Controller
+paths:
+  /products:
+    get:
+      tags:
+        - product-controller
+      summary: lista
+      operationId: listaUsingGET
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ProductDto'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ExceptionResponse'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ExceptionResponse'
+    post:
+      tags:
+        - product-controller
+      summary: cadastrar
+      operationId: cadastrarUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: form
+          description: form
+          required: true
+          schema:
+            $ref: '#/definitions/ProductForm'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ProductDto'
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ExceptionResponse'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ExceptionResponse'
+  /products/search:
+    get:
+      tags:
+        - product-controller
+      summary: filtro
+      operationId: filtroUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: max_price
+          in: query
+          description: max_price
+          required: false
+          type: string
+        - name: min_price
+          in: query
+          description: min_price
+          required: false
+          type: string
+        - name: q
+          in: query
+          description: q
+          required: false
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ProductDto'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ExceptionResponse'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ExceptionResponse'
+  /products/{id}:
+    get:
+      tags:
+        - product-controller
+      summary: detalhar
+      operationId: detalharUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ProductDto'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ExceptionResponse'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ExceptionResponse'
+    put:
+      tags:
+        - product-controller
+      summary: atualizar
+      operationId: atualizarUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: form
+          description: form
+          required: true
+          schema:
+            $ref: '#/definitions/ProductForm'
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ProductDto'
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ExceptionResponse'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ExceptionResponse'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ExceptionResponse'
+    delete:
+      tags:
+        - product-controller
+      summary: remover
+      operationId: removerUsingDELETE
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+definitions:
+  ProductDto:
+    type: object
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      price:
+        type: number
+    title: ProductDto
+  ProductForm:
+    type: object
+    required:
+      - description
+      - name
+      - price
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+        minimum: 0
+        exclusiveMinimum: false
+    title: ProductForm
+  ExceptionResponse:
+    type: object
+    properties:
+      status_code:
+        type: integer
+        format: int64
+      message:
+        type: string
+    title: ExceptionResponse
