@@ -51,11 +51,12 @@ public class ProductServiceTest {
 		productService.findByName(q);
 	}
 	@Test
-	public void deveriaDevolverUmProdutoAoCarregarPeloPreçoMaximo() {
+	public void deveriaDevolverUmProdutoAoCarregarPeloPreçoMaximoEOuMinimo() {
 		String max_price = "10000.00";
+		String min_price = "100.00";
 		List<Product> product = List.of(criarProduct());
 		Mockito.when(productRepository.findByName(ArgumentMatchers.eq(max_price))).thenReturn(product);
-		productService.findByPriceMax(max_price);
+		productService.findByPrice(max_price, min_price);
 	}
 
 }

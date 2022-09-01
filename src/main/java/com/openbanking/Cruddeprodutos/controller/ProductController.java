@@ -29,7 +29,6 @@ public class ProductController {
 
 	private ProductService productService;
 	
-	
 	@Autowired
 	public ProductController(ProductService productService) {
 		this.productService = productService;
@@ -40,28 +39,18 @@ public class ProductController {
 		List<Product> products = productService.findAll();
 		return ProductDto.converter(products);
 	}
-	
-	@GetMapping("/search")
+	@GetMapping(value = "/search")
 	public List<ProductDto> filtro(String q, String max_price, String min_price) {
-		if ((q == null) && (max_price == null) && (min_price == null)) {
-			List<Product> products = productService.findAll();
-			return ProductDto.converter(products);
-		} else {
 			if(q != null) {
 				List<Product> products = productService.findByName(q);
 				return ProductDto.converter(products);			
 			} else {
-				if(max_price != null) {
-					List<Product> products = productService.findByPriceMax(max_price);
+//				if((max_price != null) && (min_price != null)) {
+					List<Product> products = productService.findByPrice(max_price, min_price);
 					return ProductDto.converter(products);	
-				}else {
-//					if(min_price != null) {
-						List<Product> products = productService.findByPriceMin(min_price);
-						return ProductDto.converter(products);
-				}
-			}			
-		}
-	}
+			}
+		}			
+	
 	@PostMapping
 	@Transactional
 	public ResponseEntity<ProductDto> cadastrar (@RequestBody @Valid ProductForm form, UriComponentsBuilder uriBuilder) {

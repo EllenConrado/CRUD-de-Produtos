@@ -4,7 +4,8 @@ info:
   version: 1.0.0
   title: Documentação da Api
   contact:
-    name: Ellen Cristina Pelissari Conrado
+    name: Ellen Conrado
+    url: https://github.com/EllenConrado/CRUD-de-Produtos
     email: ellenc.conrado@gmail.com
 host: localhost:9999
 basePath: /
@@ -27,14 +28,19 @@ paths:
             type: array
             items:
               $ref: '#/definitions/ProductDto'
+        '400':
+          description: Bad Request!
+          schema:
+            $ref: '#/definitions/ExceptionResponse'
         '404':
-          description: Not Found
+          description: Not Found!
           schema:
             $ref: '#/definitions/ExceptionResponse'
         '500':
-          description: Internal Server Error
+          description: Internal Server Error!
           schema:
             $ref: '#/definitions/ExceptionResponse'
+      deprecated: false
     post:
       tags:
         - product-controller
@@ -56,16 +62,15 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/ProductDto'
-        '201':
-          description: Created
         '400':
-          description: Bad Request
+          description: Bad Request!
           schema:
             $ref: '#/definitions/ExceptionResponse'
         '404':
-          description: Not Found
+          description: Not Found!
           schema:
             $ref: '#/definitions/ExceptionResponse'
+      deprecated: false
   /products/search:
     get:
       tags:
@@ -97,14 +102,19 @@ paths:
             type: array
             items:
               $ref: '#/definitions/ProductDto'
+        '400':
+          description: Bad Request!
+          schema:
+            $ref: '#/definitions/ExceptionResponse'
         '404':
-          description: Not Found
+          description: Not Found!
           schema:
             $ref: '#/definitions/ExceptionResponse'
         '500':
-          description: Internal Server Error
+          description: Internal Server Error!
           schema:
             $ref: '#/definitions/ExceptionResponse'
+      deprecated: false
   /products/{id}:
     get:
       tags:
@@ -125,14 +135,19 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/ProductDto'
+        '400':
+          description: Bad Request!
+          schema:
+            $ref: '#/definitions/ExceptionResponse'
         '404':
-          description: Not Found
+          description: Not Found!
           schema:
             $ref: '#/definitions/ExceptionResponse'
         '500':
-          description: Internal Server Error
+          description: Internal Server Error!
           schema:
             $ref: '#/definitions/ExceptionResponse'
+      deprecated: false
     put:
       tags:
         - product-controller
@@ -160,20 +175,19 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/ProductDto'
-        '201':
-          description: Created
         '400':
-          description: Bad Request
+          description: Bad Request!
           schema:
             $ref: '#/definitions/ExceptionResponse'
         '404':
-          description: Not Found
+          description: Not Found!
           schema:
             $ref: '#/definitions/ExceptionResponse'
         '500':
-          description: Internal Server Error
+          description: Internal Server Error!
           schema:
             $ref: '#/definitions/ExceptionResponse'
+      deprecated: false
     delete:
       tags:
         - product-controller
@@ -193,12 +207,11 @@ paths:
           description: OK
           schema:
             type: object
-        '204':
-          description: No Content
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
+        '404':
+          description: Not Found!
+          schema:
+            $ref: '#/definitions/ExceptionResponse'
+      deprecated: false
 definitions:
   ProductDto:
     type: object
@@ -215,10 +228,6 @@ definitions:
     title: ProductDto
   ProductForm:
     type: object
-    required:
-      - description
-      - name
-      - price
     properties:
       description:
         type: string
@@ -226,8 +235,6 @@ definitions:
         type: string
       price:
         type: number
-        minimum: 0
-        exclusiveMinimum: false
     title: ProductForm
   ExceptionResponse:
     type: object

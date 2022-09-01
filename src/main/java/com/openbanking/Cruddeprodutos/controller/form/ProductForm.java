@@ -8,24 +8,17 @@ import javax.validation.constraints.NotNull;
 
 import com.openbanking.Cruddeprodutos.entidades.Product;
 import com.openbanking.Cruddeprodutos.service.ProductService;
-import com.openbanking.Cruddeprodutos.service.exception.BadRequestException;
 
 public class ProductForm {
 
-	@NotBlank
+	@NotBlank(message="Não pode ser nulo ou vazio") 
 	private String name;
-	@NotBlank
+	@NotBlank(message="Não pode ser nulo ou vazio") 
 	private String description;
-	@NotNull @DecimalMin ("0.00")
+	@NotNull(message="Não pode ser nulo") @DecimalMin ("0.00")
 	private BigDecimal price;
-	
-	
-	
-	public ProductForm(@NotBlank String name, @NotBlank String description,
-			@NotNull @DecimalMin("0.00") BigDecimal price) {
-		if((name.isEmpty())||(description.isEmpty())||(price == null)){
-			throw new BadRequestException ("bad request");
-		}
+
+	public ProductForm(String name, String description, BigDecimal price) {
 		this.name = name;
 		this.description = description;
 		this.price = price;

@@ -38,26 +38,15 @@ public class ProductService {
 			throw new InternalServerErrorException("internal server error");
 		}
 	}
-	//Get({/search?max_price})
-	public List<Product> findByPriceMax(String max_price) {
+	//Get({/search?max_price/min_price})
+	public List<Product> findByPrice(String max_price, String min_price) {
 		try {
-			return productRepository.findByPriceMax(max_price);
+			return productRepository.findByPrice(max_price, min_price);
 		}catch(ArrayIndexOutOfBoundsException e) {
 			throw new BadRequestException ("bad request");
 		}catch(NoSuchElementException e) {
 			throw new InternalServerErrorException("internal server error");
 		}
-	}
-	//Get({/search?min_price})
-	public List<Product> findByPriceMin(String min_price) {
-		try {
-			return productRepository.findByPriceMin(min_price);
-		}catch(ArrayIndexOutOfBoundsException e) {
-			throw new BadRequestException ("bad request");
-		}catch(NoSuchElementException e) {
-			throw new InternalServerErrorException("internal server error");
-		}
-		
 	}
 	
 	//Get(/{id})
@@ -75,7 +64,7 @@ public class ProductService {
 	}
 	
 	//Post
-	public Product save(Product product) {
+	public Product save(Product product){
 		try {
 			return productRepository.save(product);
 		}catch(NoSuchElementException e) {
@@ -104,4 +93,5 @@ public class ProductService {
 				throw new NotFoundException ("not found"+id);
 			}
 	}
+
 }

@@ -32,29 +32,19 @@ public class ProductRepositoryTest {
 		Assert.assertNotNull(products);
 	}
 	@Test
-	public void deveriaCarregarUmProdutoAoIndicarUmPrecoMaximo() {
+	public void deveriaCarregarUmProdutoAoIndicarUmPrecoMaximoEOuMinimo() {
 		String max_price = "10000";
-		List<Product> products = productRepository.findByPriceMax(max_price);
+		String min_price = "100";
+		List<Product> products = productRepository.findByPrice(max_price, min_price);
 		Assert.assertNotNull(products);
 		Assert.assertEquals(max_price, "10000");
+		Assert.assertEquals(min_price, "100");
 	}
 	@Test
-	public void naoDeveriaCarregarUmProdutoAoNaoIndicarNenhumPrecoMaximo() {
+	public void naoDeveriaCarregarUmProdutoAoNaoIndicarNenhumPrecoMaximoEOuMinimo() {
 		String max_price = "10000";
-		List<Product> products = productRepository.findByPriceMax(max_price);
-		Assert.assertNotNull(products);
-	}
-	@Test
-	public void deveriaCarregarUmProdutoAoIndicarUmPrecoMinimo() {
-		String min_price = "10000";
-		List<Product> products = productRepository.findByPriceMax(min_price);
-		Assert.assertFalse(products.isEmpty());
-		Assert.assertEquals(min_price,"10000");
-	}
-	@Test
-	public void naoDeveriaCarregarUmProdutoAoNaoIndicarNenhumPrecoMinimo() {
-		String min_price = "10000";
-		List<Product> products = productRepository.findByPriceMax(min_price);
+		String min_price = "100";
+		List<Product> products = productRepository.findByPrice(max_price, min_price);
 		Assert.assertNotNull(products);
 	}
 }
